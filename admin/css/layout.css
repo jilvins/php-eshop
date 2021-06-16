@@ -52,6 +52,16 @@ a:hover {
 	background:#2E5E79;
 }
 
+.success{
+font-size: 18px;
+color: green;
+}
+
+.error{
+font-size: 18px;
+color: red;
+}
+
 
 /* headings
 ----------------------------------------------- */
