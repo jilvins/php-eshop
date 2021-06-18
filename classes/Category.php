@@ -31,11 +31,11 @@ class Category {
             $query = "INSERT INTO tbl_category(catName) values ('$catName')";
             $catInsert = $this->db->insert($query);
             if ($catInsert) {
-                $catmsg = "<span class='success'>Category inserted Successfully</span>";
-                return $catmsg;
+                $msg = "<span class='success'>Category inserted Successfully</span>";
+                return $msg;
             }else {
-                $catmsg = "<span class='error'>Category not inserted</span>";
-                return $catmsg;
+                $msg = "<span class='error'>Category not inserted</span>";
+                return $msg;
             }
         }
     }
@@ -56,11 +56,11 @@ class Category {
        $query = "DELETE from tbl_category WHERE catId = '$id' ";
        $deleteData = $this->db->delete($query);
        if($deleteData) {
-        $catmsg = "<span class='success'>Category deleted Successfully</span>";
-        return $catmsg;
+        $msg = "<span class='success'>Category deleted Successfully</span>";
+        return $msg;
        } else {
-        $catmsg = "<span class='error'>Category was not deleted</span>";
-        return $catmsg;
+        $msg = "<span class='error'>Category was not deleted</span>";
+        return $msg;
        }
     }
 
@@ -70,19 +70,19 @@ class Category {
         $id = mysqli_real_escape_string($this->db->link, $id);
 
         if(empty($catName)) {
-            $catmsg = "<span class='error'>Category field must not be empty</span>";
-            return $catmsg;
+            $msg = "<span class='error'>Category field must not be empty</span>";
+            return $msg;
     }else {
         $query= "UPDATE tbl_category
         SET catName = '$catName'
         WHERE catId = '$id' ";
         $update_row = $this->db->update($query);
         if($update_row) {
-            $catmsg = "<span class='success'>Category updated Successfully</span>";
-            return $catmsg;
+            $msg = "<span class='success'>Category updated Successfully</span>";
+            return $msg;
         }else {
-            $catmsg = "<span class='error'>Category was not updated</span>";
-            return $catmsg; 
+            $msg = "<span class='error'>Category was not updated</span>";
+            return $msg; 
         }
     }
 }
