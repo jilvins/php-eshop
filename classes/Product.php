@@ -79,6 +79,98 @@ class Product {
         $result = $this->db->select($query);
         return $result; 
     }
+
+    public function productUpdate($data, $file, $id ) {
+
+        $productName = mysqli_real_escape_string($this->db->link, $data['productName']);
+        $catId = mysqli_real_escape_string($this->db->link, $data['catId']);
+        $brandId = mysqli_real_escape_string($this->db->link, $data['brandId']);
+        $body = mysqli_real_escape_string($this->db->link, $data['body']);
+        $price = mysqli_real_escape_string($this->db->link, $data['price']);
+        $type = mysqli_real_escape_string($this->db->link, $data['type']);
+
+        $permit = array('jpg','png','jpeg','gif');
+        $file_name = $file['image']['name'];
+        $file_size = $file['image']['size'];
+        $file_temp = $file['image']['tmp_name'];
+
+        $div = explode('.', $file_name);
+        $file_ext = strtolower(end($div));
+        $unique_image = substr(md5(time()), 0, 10). '.' . $file_ext;
+        $uploaded_image = "upload/".$unique_image;
+        if($productName == "" || $catId == "" || $brandId == "" ||
+        $body == "" || $price == "" || $type == "") {
+            $msg = "<span class='error'>Field must not be empty</span>";
+            return $msg;
+        }else { 
+            if(!empty($file_name)) {
+        if ($file_size > 1054589) {
+            echo "<span class='error'>Image size should be less then 1mb</span>";
+        }elseif (in_array($file_ext, $permit) === false) {
+            echo "<span class='error'>You can upload only " .implode('', $permit). "</span>";
+        }else {
+            move_uploaded_file($file_temp, $uploaded_image);
+            $query = "UPDATE tbl_product SET 
+            productName = '$productName',
+            catId = '$catId',
+            brandId = '$brandId',
+            body = '$body',
+            price = '$price',
+            image = '$uploaded_image',
+            type = '$type'
+            WHERE productId = '$id' ";
+
+            $updated_row = $this->db->update($query);
+            if ($updated_row) {
+                $msg = "<span class='success'>Product updated Successfully</span>";
+                return $msg;
+            }else {
+                $msg = "<span class='error'>Product not updated</span>";
+                return $msg;
+            }
+        }
+    } else {
+        move_uploaded_file($file_temp, $uploaded_image);
+            $query = "UPDATE tbl_product SET 
+            productName = '$productName',
+            catId = '$catId',
+            brandId = '$brandId',
+            body = '$body',
+            price = '$price',
+            type = '$type'
+            WHERE productId = '$id' ";
+
+            $updated_row = $this->db->update($query);
+            if ($updated_row) {
+                $msg = "<span class='success'>Product updated Successfully</span>";
+                return $msg;
+            }else {
+                $msg = "<span class='error'>Product not updated</span>";
+                return $msg;
+            }
+        }  
+    }
+    }
+
+    public function delProdById($id) {
+        $query = "SELECT * FROM tbl_product WHERE productId = '$id' ";
+        $getData = $this->db->select($query);
+        if ($getData) {
+            while ($delImg = $getData->fetch_assoc()) {
+                $delLink = $delImg['image'];
+                unlink($delLink);
+            }
+        }
+        $delquery = "DELETE FROM tbl_product WHERE productId = '$id' ";
+        $deleteProduct = $this->db->delete($delquery);
+       if($deleteProduct) {
+        $msg = "<span class='success'>Product deleted Successfully</span>";
+        return $msg;
+       } else {
+        $msg = "<span class='error'>Product was not deleted</span>";
+        return $msg;
+       }
+    }
 }
 
 
