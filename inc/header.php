@@ -1,3 +1,22 @@
+<?php
+
+include 'library/session.php';
+Session::init();
+include 'library/database.php';
+include 'helpers/format.php';
+
+spl_autoload_register(function($class) {
+	include_once "classes/".$class.".php";
+});
+
+$db = new Database();
+$fm = new Format();
+$pd = new Product();
+$ct = new Cart();
+
+
+?>
+
 <!DOCTYPE HTML>
 <head>
 <title>Store Website</title>
