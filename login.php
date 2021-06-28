@@ -1,5 +1,13 @@
 <?php include 'inc/header.php' ?>
 
+<?php
+ $login = Session::get("cuslogin");
+ if($login == true) {
+	 header("Location:order.php");
+ }
+ 
+?>
+
                    
 <?php
     

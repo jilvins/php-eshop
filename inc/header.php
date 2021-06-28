@@ -73,7 +73,27 @@ $cmr = new User();
 							</a>
 						</div>
 			      </div>
-		   <div class="login"><a href="login.php">Login</a></div>
+
+			<?php
+			if(isset($_GET['cid'])) {
+				$delData = $ct->delCustomerCart();
+				Session::destroy();
+			}
+
+			?>
+		   <div class="login">
+		   <?php
+			$login = Session::get("cuslogin");
+ 			if($login == false) { ?>
+				<a href="login.php">Login</a>
+ 			<?php	} else { ?>
+				 <a href="?cid=<?php Session::get('cmrId');  ?> ">Logout</a>
+			<?php }
+			?>
+		   
+		   
+		   
+		   </div>
 		 <div class="clear"></div>
 	 </div>
 	 <div class="clear"></div>
@@ -83,7 +103,30 @@ $cmr = new User();
 	  <li><a href="index.php">Home</a></li>
 	  <li><a href="products.php">Products</a> </li>
 	  <li><a href="topbrands.php">Top Brands</a></li>
-	  <li><a href="cart.php">Cart</a></li>
+	  <?php
+		$chkCart = $ct->checkCartTable();
+		if($chkCart) { ?>
+			<li><a href="cart.php">Cart</a></li>
+		<?php }
+	  ?>
+
+	  <?php
+	  	$cmrId = Session::get("cmrId");
+		$chkOrder = $ct->checkOrder($cmrId);
+		if($chkOrder) { ?>
+			<li><a href="order.php">Order</a></li>
+		<?php }
+	  ?>
+	  
+		<?php
+		$login = Session::get("cuslogin");
+		if($login == true) { ?>
+			<li><a href="profile.php">Profile</a></li>
+			<li><a href="payment.php">Payment</a></li>
+		<?php }
+		?>
+	  
+
 	  <li><a href="contact.php">Contact</a> </li>
 	  <div class="clear"></div>
 	</ul>

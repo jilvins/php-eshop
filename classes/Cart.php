@@ -92,13 +92,60 @@ class Cart {
 
     public function checkCartTable() {
         $sId = session_id();
-
         $query = "SELECT * FROM tbl_cart WHERE sId = '$sId' ";
         $result = $this->db->select($query);
         return $result;
     }
     
+    public function delCustomerCart() {
+        $sId = session_id();
+        $query = "DELETE FROM tbl_cart WHERE sId = '$sId' ";
+        $this->db->select($query);
+    }
 
+    public function orderProduct($cmrId){
+        $sId = session_id();
+        $query = "SELECT * FROM tbl_cart WHERE sId = '$sId' ";
+        $getProd = $this->db->select($query);
+        if($getProd) {
+            while($result= $getProd->fetch_assoc()) {
+                $productId = $result['productId'];
+                $productName = $result['productName'];
+                $quantity = $result['quantity'];
+                $price = $result['price'];
+                $image = $result['image'];
+
+            $query = "INSERT INTO tbl_order(cmrId, productId, productName, quantity, price, image ) 
+            values ('$cmrId', '$productId', '$productName',
+             '$quantity', '$price', '$image')";
+
+            $inserted_row = $this->db->insert($query);
+                
+            }
+            
+        }
+    }
+    public function getOrderProducts($cmrId){
+        $query = "SELECT * FROM tbl_order WHERE cmrId = '$cmrId' ORDER BY productId DESC ";
+        $result = $this->db->select($query);
+        return $result;
+    }
+
+    public function checkOrder($cmrId){
+        $query = "SELECT * FROM tbl_order WHERE cmrId = '$cmrId' ";
+        $result = $this->db->select($query);
+        return $result;
+
+    }
+
+    public function getAllOrderProucts(){
+        $query = "SELECT * FROM tbl_order ORDER BY date ";
+        $result = $this->db->select($query);
+        return $result;
+
+    }
+
+    
 
 }
 
