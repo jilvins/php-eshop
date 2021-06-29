@@ -85,6 +85,40 @@ public function brandUpdate($brandName, $id ) {
     }
 }
 }
+public function getCopyById() {
+    $query = "SELECT * FROM tbl_copyrights";
+    $result = $this->db->select($query);
+    return $result;
+}
+
+public function copyrightUpdate($copyright) {
+    $copyright = $this->format->validation($copyright);
+    $copyright = mysqli_real_escape_string($this->db->link, $copyright);
+
+    if(empty($copyright)) {
+        $msg = "<span class='error'>Copyright field must not be empty</span>";
+        return $msg;
+}else {
+    $query= "UPDATE tbl_copyrights
+    SET copyright = '$copyright' 
+    WHERE id = '1' ";
+    
+    $update_row = $this->db->update($query);
+    if($update_row) {
+        $msg = "<span class='success'>Copyright updated Successfully</span>";
+        return $msg;
+    }else {
+        $msg = "<span class='error'>Copyright was not updated</span>";
+        return $msg; 
+    }
+}
+}
+
+public function getSocial() {
+    $query = "SELECT * FROM tbl_social";
+    $result = $this->db->select($query);
+    return $result;
+}
 
 
 

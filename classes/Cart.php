@@ -145,6 +145,41 @@ class Cart {
 
     }
 
+    public function productShipped($id, $date, $price) {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        $date = mysqli_real_escape_string($this->db->link, $date);
+        $price = mysqli_real_escape_string($this->db->link, $price);
+
+        $query= "UPDATE tbl_order
+        SET status = '1'
+        WHERE cmrId = '$id' AND date='$date' AND price='$price' ";
+        $update_row = $this->db->update($query);
+        if($update_row) {
+            $msg = "<span class='success'>Updated Successfully</span>";
+            return $msg; 
+        }else {
+            $msg = "<span class='error'>Was not updated</span>";
+            return $msg; 
+        }
+    }
+
+    public function delProductShipped($id, $date, $price) {
+        $id = mysqli_real_escape_string($this->db->link, $id);
+        $date = mysqli_real_escape_string($this->db->link, $date);
+        $price = mysqli_real_escape_string($this->db->link, $price);
+
+        $query = "DELETE from tbl_order 
+        WHERE cmrId = '$id' AND date='$date' AND price='$price' ";
+       $deleteData = $this->db->delete($query);
+       if($deleteData) {
+        $msg = "<span class='success'>Data deleted Successfully</span>";
+        return $msg;
+       } else {
+        $msg = "<span class='error'>Data was not deleted</span>";
+        return $msg;
+       }
+    }
+
     
 
 }

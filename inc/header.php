@@ -76,7 +76,9 @@ $cmr = new User();
 
 			<?php
 			if(isset($_GET['cid'])) {
+				$cmrId = Session::get("cmrId");
 				$delData = $ct->delCustomerCart();
+				$delCompare = $pd->delCompareData($cmrId);
 				Session::destroy();
 			}
 
@@ -125,9 +127,20 @@ $cmr = new User();
 			<li><a href="payment.php">Payment</a></li>
 		<?php }
 		?>
-	  
+	  <?php
+		
+		$getPd= $pd->getCompareProduct($cmrId);
+		if($getPd) { ?>
+	  <li><a href="compare.php">Compare</a> </li>
+	  <?php } ?>
 
-	  <li><a href="contact.php">Contact</a> </li>
+	  <?php
+		
+		$checkWish= $pd->checkWishlist($cmrId);
+		if($checkWish) { ?>
+	  <li><a href="wishlist.php">Wishlist</a> </li>
+	  <?php } ?>
+	  <li><a href="wishlist.php">Contact</a> </li>
 	  <div class="clear"></div>
 	</ul>
 </div>

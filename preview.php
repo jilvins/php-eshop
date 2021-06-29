@@ -1,16 +1,15 @@
 <?php include 'inc/header.php' ?>
 
 <?php
-if(!isset($_GET['proid']) || $_GET['proid'] == null) {
-    echo "<script>window.location = '404.php'; </script>";
-}else {
+if(isset($_GET['proid'])) {
+    
    $id = $_GET['proid']; 
 }
 
 ?>
 <?php
   
-    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
         $quantity = $_POST['quantity'];
         
     
@@ -18,6 +17,27 @@ if(!isset($_GET['proid']) || $_GET['proid'] == null) {
     }
 
 ?>
+
+<?php
+    
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['compare'])) {
+        $productId = $_POST['productId'];
+        $insertCompare = $pd->insertCompareData($productId, $cmrId);
+    }
+
+?>
+
+<?php
+    
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['wishlist'])) {
+    
+        $insertWish = $pd->saveWishListData($id, $cmrId);
+    }
+
+?>
+<style>
+.mybutton{width: 100px; float: left; margin-right: 45px;}
+</style>
 
  <div class="main">
     <div class="content">
@@ -53,7 +73,35 @@ if(!isset($_GET['proid']) || $_GET['proid'] == null) {
 					echo $addCart;
 				}
 				?>
+				<?php 
+				if(isset($insertCompare)) {
+					echo $insertCompare;
+				}
+				?>
+				<?php 
+				if(isset($insertWish)) {
+					echo $insertWish;
+				}
+				?>
 				</span>
+				<?php
+				$login = Session::get("cuslogin");
+				if($login == true) { ?>
+				<div class="add-cart">
+				<div class="mybutton">
+				<form action=" " method="post">
+						<input type="hidden" class="buyfield" name="productId" value="<?php echo $result['productId']; ?>"/>
+						<input type="submit" class="buysubmit" name="compare" value="Add to Compare"/>
+					</form>	
+				</div>
+				<div class="mybutton">
+					<form action=" " method="post">
+						
+						<input type="submit" class="buysubmit" name="wishlist" value="Add to Wishlist"/>
+					</form>	
+				</div>
+				</div>
+				<?php }  ?>
 			</div>
 			<div class="product-desc">
 			<h2>Product Details</h2>

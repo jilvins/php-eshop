@@ -50,7 +50,16 @@
 				</div>
 			</div>
 			<div class="copy_right">
-				<p>easy Learning project &amp; All rights Reseverd </p>
+			<?php
+            $brand = new Brand();
+            $getcopy = $brand->getCopyById();
+            
+            if($getcopy) {
+            while ($result = $getcopy->fetch_assoc()) {
+
+        	?>
+				<p><?php echo $result['copyright']; ?></p>
+				<?php } } ?>
 		   </div>
      </div>
     </div>

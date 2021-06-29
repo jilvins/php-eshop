@@ -1,17 +1,38 @@
 ﻿<?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
+<?php include '../classes/Brand.php'; ?>
+
+<?php
+    $cat = new Brand();
+    if($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $copyright = $_POST['copyright'];
+        
+    
+        $updateCopyright = $cat->copyrightUpdate($copyright);
+    }
+
+?>
+
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Update Social Media</h2>
-        <div class="block">               
-         <form>
+        <div class="block">   
+        <?php
+            $brand = new Brand();
+            $getsocial = $brand->getSocial();
+            
+            if($getsocial) {
+            while ($result = $getsocial->fetch_assoc()) {
+
+        ?>            
+         <form action="" method="post">
             <table class="form">					
                 <tr>
                     <td>
                         <label>Facebook</label>
                     </td>
                     <td>
-                        <input type="text" name="facebook" placeholder="Facebook link.." class="medium" />
+                        <input type="text" name="fb" value="<?php echo $result['fb']; ?>" class="medium" />
                     </td>
                 </tr>
 				 <tr>
@@ -19,7 +40,7 @@
                         <label>Twitter</label>
                     </td>
                     <td>
-                        <input type="text" name="twitter" placeholder="Twitter link.." class="medium" />
+                        <input type="text" name="tw" value="<?php echo $result['tw']; ?>" class="medium" />
                     </td>
                 </tr>
 				
@@ -28,7 +49,7 @@
                         <label>LinkedIn</label>
                     </td>
                     <td>
-                        <input type="text" name="linkedin" placeholder="LinkedIn link.." class="medium" />
+                        <input type="text" name="ln" value="<?php echo $result['ln']; ?>" class="medium" />
                     </td>
                 </tr>
 				
@@ -37,7 +58,7 @@
                         <label>Google Plus</label>
                     </td>
                     <td>
-                        <input type="text" name="googleplus" placeholder="Google Plus link.." class="medium" />
+                        <input type="text" name="gp" value="<?php echo $result['gp']; ?>" class="medium" />
                     </td>
                 </tr>
 				
@@ -49,6 +70,7 @@
                 </tr>
             </table>
             </form>
+            <?php } } ?>
         </div>
     </div>
 </div>
