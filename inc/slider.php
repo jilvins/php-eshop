@@ -89,10 +89,16 @@
 			<section class="slider">
 				  <div class="flexslider">
 					<ul class="slides">
-						<li><img src="images/1.jpg" alt=""/></li>
-						<li><img src="images/2.jpg" alt=""/></li>
-						<li><img src="images/3.jpg" alt=""/></li>
-						<li><img src="images/4.jpg" alt=""/></li>
+					<?php
+						$slide = new Brand();
+						$getImg = $slide->getAllImages();
+						if($getImg) {
+
+						while($result = $getImg->fetch_assoc()) {
+
+					?>
+						<li><img src="admin/<?php echo $result['image']; ?>" alt=""/></li>
+					<?php  } } ?>
 				    </ul>
 				  </div>
 	      </section>

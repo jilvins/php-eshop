@@ -326,6 +326,12 @@ class Product {
         $deleteWish = $this->db->delete($query); 
     }
 
+    public function productBySearch($search) {
+        $query = "SELECT * FROM tbl_product WHERE productName LIKE '%$search%' OR body LIKE '%$search%' ";
+        $result = $this->db->select($query);
+        return $result; 
+    }
+
     
 }
 

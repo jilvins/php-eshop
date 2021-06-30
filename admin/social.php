@@ -5,10 +5,13 @@
 <?php
     $cat = new Brand();
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $copyright = $_POST['copyright'];
+        $fb = $_POST['fb'];
+        $tw = $_POST['tw'];
+        $ln = $_POST['ln'];
+        $gp = $_POST['gp'];
         
     
-        $updateCopyright = $cat->copyrightUpdate($copyright);
+        $updateSocMed = $cat->socMedUpdate($fb, $tw, $ln, $gp);
     }
 
 ?>
@@ -17,6 +20,11 @@
     <div class="box round first grid">
         <h2>Update Social Media</h2>
         <div class="block">   
+        <?php
+            if(isset($updateSocMed)){
+            echo $updateSocMed;
+            }
+        ?>
         <?php
             $brand = new Brand();
             $getsocial = $brand->getSocial();

@@ -49,8 +49,9 @@ $cmr = new User();
 			</div>
 			  <div class="header_top_right">
 			    <div class="search_box">
-				    <form>
-				    	<input type="text" value="Search for Products" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Search for Products';}"><input type="submit" value="SEARCH">
+				    <form action="search.php" method="get">
+				    	<input type="text" name="search" placeholder="Search for Product" >
+						<input type="submit" value="SEARCH">
 				    </form>
 			    </div>
 			    <div class="shopping_cart">

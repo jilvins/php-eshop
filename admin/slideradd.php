@@ -1,10 +1,27 @@
 <?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
+<?php include '../classes/Brand.php'; ?>
+
+<?php
+    $image = new Brand();
+    if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit'])) {
+        
+        $insertImage = $image->imageInsert($_POST, $_FILES );
+    }
+
+?>
+
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Add New Slider</h2>
-    <div class="block">               
-         <form action="addslider.php" method="post" enctype="multipart/form-data">
+    <div class="block">   
+    <?php
+            if(isset($insertImage)){
+            echo $insertImage;
+            }
+        ?>
+
+         <form action=" " method="post" enctype="multipart/form-data">
             <table class="form">     
                 <tr>
                     <td>

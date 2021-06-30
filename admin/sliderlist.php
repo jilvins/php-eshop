@@ -1,5 +1,7 @@
 <?php include 'inc/header.php';?>
 <?php include 'inc/sidebar.php';?>
+<?php include '../classes/Brand.php'; ?>
+
 <div class="grid_10">
     <div class="box round first grid">
         <h2>Slider List</h2>
@@ -14,16 +16,26 @@
 				</tr>
 			</thead>
 			<tbody>
+			<?php
+			$slide = new Brand();
+			$getImg = $slide->getAllImages();
+			if($getImg) {
+				$i = 0;
+				while($result = $getImg->fetch_assoc()) {
+					$i++;
+			
+			?>
 
 				<tr class="odd gradeX">
-					<td>01</td>
-					<td>Title of Slider</td>
-					<td><img src="" height="40px" width="60px"/></td>				
+					<td><?php echo $i; ?></td>
+					<td><?php echo $result['title']; ?></td>
+					<td><img src="<?php echo $result['image']; ?>" height="40px" width="60px"></td>				
 				<td>
 					<a href="">Edit</a> || 
 					<a onclick="return confirm('Are you sure to Delete!');" >Delete</a> 
 				</td>
 					</tr>	
+					<?php } }?>
 			</tbody>
 		</table>
 
